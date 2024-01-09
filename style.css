@@ -1,0 +1,105 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  user-select:none;
+}
+body {
+  display:flex;
+}
+.big-cookie {
+  transition-duration:100ms;
+  height: 300px;
+  width: 300px;
+}
+
+.column {
+  border: black 5px solid;
+}
+.cookie-column {
+  width: 25%;
+  max-width:25%;
+}
+
+.inventory-column {
+  width: 50%;
+}
+.inventory-row {
+  height: 128px;
+}
+.inventory-row.grandmas {
+  background: url(https://orteil.dashnet.org/cookieclicker/img/grandmaBackground.png)
+}
+.inventory-row.farms {
+  background: url(https://orteil.dashnet.org/cookieclicker/img/farmBackground.png)
+}
+.store-column {
+  width: 25%;
+}
+.horizontal-divider {
+  height:16px;
+  background: url(https://orteil.dashnet.org/cookieclicker/img/panelHorizontal.png);
+}
+.cookie-column #cookie {
+  margin-top: 25vh;
+  width: 300px;
+}
+body {
+  background: url(https://orteil.dashnet.org/cookieclicker/img/bgBlue.jpg);
+}
+
+.store-row {
+  height: 64px;
+  background-color:grey;
+  display:flex;
+  border: 1px solid white;
+}
+
+.store-row .store-img {
+  height:64px;
+  width: 64px;
+  border:0px;
+}
+
+.store-info .price {
+  margin:0;
+  padding-left:16px;
+  height:16px;
+  background: url("img/money.png") no-repeat;
+}
+.store-row .store-info {
+  height:16px;
+}
+.store-row.disabled {
+  opacity: 50%;
+}
+.store-info h3 {
+  margin:0;
+}
+
+.store-row .have {
+  flex:1;
+  text-align:right;
+}
+
+.cursor .store-img {
+  background: url("img/buildings.png") 0px 0px;
+}
+.grandma .store-img {
+  background: url("img/buildings.png") 0px -64px;
+}
+.farm .store-img {
+  background: url("img/buildings.png") 0px -192px;
+}
+
+.store-column .upgrade .upgrade-img {
+  height:48px;
+  width:48px;
+  border: 8px solid transparent;
+  border-image: url(https://orteil.dashnet.org/cookieclicker/img/panelHorizontal.png) 30 round;
+}
+
+.moreClicks .upgrade-img {
+  background: url(https://cdn.dashnet.org/cookieclicker/img/icons.png?v=2.052) 0px 0px;
+}

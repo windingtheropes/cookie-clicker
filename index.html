@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+  <script src="script.js"></script>
+</head>
+
+<body>
+  <section class="column cookie-column">
+
+    <div class="bakery-info">
+      <h1>Jack's bakery</h1>
+      <h2 id="cookie-counter">0 Cookies</h2>
+      <p id="cookies-persecond">0 Cookies per second</p>
+    </div>
+
+    <img id="cookie" src="img/perfectCookie.png">
+
+  </section>
+  <section class="column inventory-column">
+    <div class="horizontal-divider"></div>
+    <div class="inventory-row grandmas">
+      <div class="grandma">
+        <img src="https://orteil.dashnet.org/cookieclicker/img/grandma.png">
+      </div>
+    </div>
+    <div class="horizontal-divider"></div>
+    <div class="inventory-row farms">
+      <div class="farm">
+        <img src="https://orteil.dashnet.org/cookieclicker/img/farm.png">
+      </div>
+    </div>
+    <div class="horizontal-divider"></div>
+  </section>
+  <section class="column store-column">
+    <div class="row upgrade-row">
+      
+      <div id="buyupgrade-moreClicks" class="upgrade moreClicks">
+        <img class="upgrade-img">
+      </div>
+      
+    </div>
+    <div class="row building-row">
+      <div id="buy-cursor" class="store-row cursor disabled">
+        <img class="store-img">
+        <div class="store-info">
+          <h3>Cursor</h3>
+          <p class="price">0</p>
+        </div>
+        <h1 class="have">0</h1>
+      </div>
+      <div id="buy-grandma" class="store-row grandma disabled">
+        <img class="store-img">
+        <div class="store-info">
+          <h3>Grandma</h3>
+          <p class="price">0</p>
+        </div>
+        <h1 class="have">0</h1>
+      </div>
+      <div id="buy-farm" class="store-row farm disabled">
+          <img class="store-img">
+          <div class="store-info">
+            <h3>Farm</h3>
+            <p class="price">0</p>
+          </div>
+          <h1 class="have">0</h1>
+      </div>
+    </div>
+  </section>
+</body>
+
+</html>
