@@ -15,13 +15,42 @@ class Building {
     this.price = price;
     this.cps = cps;
     this.have = 0;
+    this.id = `buy-${this.name.toLowerCase()}`;
+    this.html = 
+      `
+      <div id="${this.id}" class="store-row ${this.name.toLowerCase()} disabled">
+        <img class="store-img">
+        <div class="store-info">
+          <h3>${this.name}</h3>
+          <p class="price">${this.price}</p>
+        </div>
+        <h1 class="have">${this.have}</h1>
+      </div>
+      `
+      $(`#building-store`).html($(`#building-store`).html() + this.html)
+  }
+  updatePrice(price) {
+    this.price = Math.round(price);  
+    $(`#${this.id} .store-info .price`).html(this.price)
+    return true
+  }
+  // buy qty of building, given the game object
+  buy(game, qty) {
+    if(game.cookies < (this.price * qty)) return false
+    game.cookies -= (this.price * qty)
+    this.have += qty
+    $(`#${this.id} .have`).html(this.have)
+    this.updatePrice(this.price*game.incfac)
+    game.updateCps();
+    return true
   }
 }
 
 class Game {
   constructor() {
     this.cookies = 0;
-    this.cps_boost = 0;
+    this.cps_boost = 0; // boost for cookies per second
+    this.cpc_boost = 0; // boost for cookies per click
     this.update_interval = 20; // cookie updates per second
     this.incfac = 1.15; // factor by which the price of buildings increases by each purchase
     this.upgrades = {
@@ -40,38 +69,20 @@ class Game {
   start() {
     this.init();
     
+    // cps loop
     setInterval(() => {
       this.updateCookies({factor:1/this.update_interval});
       this.updateStoreRow();
     }, 1000/this.update_interval)
-    setInterval(() => {
-      this.save();
-      console.log("game saved.")
-    }, 10000)
 
     this.listen()
   }
   init() {
-    for (const buildingKey in this.buildings) {
-      this.addBuilding(this.buildings[buildingKey].name)
-      this.updatePrice(this.buildings[buildingKey].name.toLowerCase())
-    }
+    // load buildings in the store page
     this.updateCps();
     this.updateCookies();
   }
-  addBuilding(name) {
-      const buildingHtml = `
-      <div id="buy-${name.toLowerCase()}" class="store-row ${name.toLowerCase()} disabled">
-        <img class="store-img">
-        <div class="store-info">
-          <h3>${name}</h3>
-          <p class="price">0</p>
-        </div>
-        <h1 class="have">0</h1>
-      </div>
-      `
-      $("#building-store").html($("#building-store").html() + buildingHtml)
-  }
+  // check if user can afford obj.price * q
   canAfford(obj, q) {
     if (this.cookies - (obj.price * q) < 0) return false
     return true
@@ -86,18 +97,6 @@ class Game {
     this.updateCps();
     return 0
   }
-  buyBuilding(name, q) {
-    if (!this.canAfford(this.buildings[name], q)) return 1
-
-    this.cookies -= this.buildings[name].price
-    this.buildings[name].have += q
-    this.buildings[name].price = Math.floor(this.buildings[name].price * this.incfac)
-
-    this.updateCps();
-
-    this.updatePrice(name);
-    return 0;
-  }
   updateStoreRow() {
     for(const b in this.buildings) {
       const building = this.buildings[b]
@@ -109,33 +108,30 @@ class Game {
       }
     }
   }
-  get cookies_per_click() {
-    const boost = 0;
-    return 1 + boost
+  get cpc() {
+    return 1 + this.cpc_boost;
   }
-  updatePrice(name) {
-    $(`#buy-${name} .store-info .price`).html(this.buildings[name].price)
-    $(`#buy-${name} .have`).html(this.buildings[name].have)
-  }
+  // listen for clicks on clickable items
   listen() {
     $("#cookie").on("click", () => {
-      this.updateCookies({amount:this.cookies_per_click});
+      this.updateCookies({amount:this.cpc});
     });
     for (const name in this.buildings) {
       $(".row .building-row")
       $(`#buy-${name}`).on("click", (e) => {
-        this.buyBuilding(name, 1);
+        if(!this.buildings[name]) console.error("Building does not exist")
+        const building = this.buildings[name]
+        building.buy(this, 1)
       });
     }
     for (const name in this.upgrades) {
       const upgrade = this.upgrades[name]
       $(`#buyupgrade-${upgrade.name}`).on("click", (e) => {
-        console.log(name)
-
         this.buyUpgrade(upgrade.name);
       });
     }
   }
+  // get the current cps based on all cps generators
   get cps() {
     let c = 0;
     for (const b in this.buildings) {
@@ -143,6 +139,16 @@ class Game {
       c += building.have * building.cps
     }
     return c + this.cps_boost
+  }
+  boost(factor, duration) {
+    console.log(`frenzy starting, factor ${factor}, for ${duration} ms`)
+    this.cps_boost = this.cps * factor
+    this.cpc_boost = this.cpc * factor
+    setTimeout(() => {
+      this.cps_boost = 0;
+      this.cpc_boost = 0;
+      console.log(`frenzy reset`)
+    }, duration)
   }
   updateCps() {
     $("#cookies-persecond").html(`${(this.cps).toFixed(1)} cookies per second`)
@@ -154,7 +160,9 @@ class Game {
   }
 }
 
-const game = new Game();
+// allow the game object to be accessed from the console
+let game;
 $(document).ready(() => {
+  game = new Game();
   game.start()
 })
