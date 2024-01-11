@@ -34,6 +34,15 @@ body {
 .inventory-row.farms {
   background: url(https://orteil.dashnet.org/cookieclicker/img/farmBackground.png)
 }
+.inventory-row.mines {
+  background: url(https://orteil.dashnet.org/cookieclicker/img/mineBackground.png)
+}
+.inventory-row.factories {
+  background: url(https://orteil.dashnet.org/cookieclicker/img/factoryBackground.png)
+}
+.inventory-row.banks {
+  background: url(https://orteil.dashnet.org/cookieclicker/img/bankBackground.png)
+}
 .store-column {
   width: 25%;
 }
@@ -92,7 +101,15 @@ body {
 .farm .store-img {
   background: url("img/buildings.png") 0px -192px;
 }
-
+.mine .store-img {
+  background: url("img/buildings.png") 0px -256px;
+}
+.factory .store-img {
+  background: url("img/buildings.png") 0px -320px;
+}
+.bank .store-img {
+  background: url("img/buildings.png") 0px -384px;
+}
 .store-column .upgrade .upgrade-img {
   height:48px;
   width:48px;
