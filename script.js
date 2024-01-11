@@ -144,10 +144,12 @@ class Game {
     console.log(`frenzy starting, factor ${factor}, for ${duration} ms`)
     this.cps_boost = this.cps * factor
     this.cpc_boost = this.cpc * factor
+    this.updateCps();
     setTimeout(() => {
       this.cps_boost = 0;
       this.cpc_boost = 0;
       console.log(`frenzy reset`)
+      this.updateCps();
     }, duration)
   }
   updateCps() {
