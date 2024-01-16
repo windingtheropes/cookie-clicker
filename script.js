@@ -6,20 +6,57 @@ class Upgrade {
     this.description = description;
     this.price = price;
     this.run = run;
+
     this.owned = false;
+
+    this.id = `buyupgrade-${this.name.toLowerCase()}`
+    this.store_html = 
+    `
+    <a id="buyupgrade-${this.name.toLowerCase()}" class="upgrade ${this.name.toLowerCase()}" title="${this.description}">
+        <div class="upgrade-img"></div>
+    </a>
+    `
+    $(`#upgrade-store`).html($(`#upgrade-store`).html() + this.store_html)
+  }
+
+  buy(game) {
+    if(game.cookies < (this.price)) return false
+    game.cookies -= (this.price)
+    this.owned = true
+    this.run(game);
+    game.updateCps();
+    $(`#inventory-${this.name.toLowerCase()}`).append(this.inventory_item_html)
+
+    return true
   }
 }
 class Building {
-  constructor(name, price, cps) {
+  constructor(name, price, cps, inventory_row_enabled=true) {
     this.name = name;
     this.price = price;
     this.cps = cps;
+    this.inventory_row_enabled = inventory_row_enabled;
+
     this.have = 0;
+
     this.id = `buy-${this.name.toLowerCase()}`;
-    this.html = 
+    this.inventory_id = `inventory-${this.name.toLowerCase()}`
+
+    this.inventory_item_html = 
+      `
+      <div class="inventory-item ${this.name.toLowerCase()}">
+        <img src="https://orteil.dashnet.org/cookieclicker/img/${this.name.toLowerCase()}.png">
+      </div>
+      `
+    this.inventory_html = 
+      `
+      <div id="${this.inventory_id}" class="inventory-row ${this.name.toLowerCase()}"></div>
+      <div class="horizontal-divider"/>
+      `
+    this.store_html = 
       `
       <div id="${this.id}" class="store-row ${this.name.toLowerCase()} disabled">
-        <img class="store-img">
+        <div class="store-img"></div>
         <div class="store-info">
           <h3>${this.name}</h3>
           <p class="price">${this.price}</p>
@@ -27,7 +64,10 @@ class Building {
         <h1 class="have">${this.have}</h1>
       </div>
       `
-      $(`#building-store`).html($(`#building-store`).html() + this.html)
+
+      // load building html for store and inventory
+      if(this.inventory_row_enabled) $(`#building-inventory`).html($(`#building-inventory`).html() + this.inventory_html)
+      $(`#building-store`).html($(`#building-store`).html() + this.store_html)
   }
   updatePrice(price) {
     this.price = Math.round(price);  
@@ -42,6 +82,8 @@ class Building {
     $(`#${this.id} .have`).html(this.have)
     this.updatePrice(this.price*game.incfac)
     game.updateCps();
+    $(`#inventory-${this.name.toLowerCase()}`).append(this.inventory_item_html)
+
     return true
   }
 }
@@ -54,10 +96,10 @@ class Game {
     this.update_interval = 20; // cookie updates per second
     this.incfac = 1.15; // factor by which the price of buildings increases by each purchase
     this.upgrades = {
-      moreClicks: new Upgrade("moreClicks", "double cursor production", 100, () => { this.buildings.cursor.cps *= 2 }),
+      moreClicks: new Upgrade("moreClicks", "double cursor production", 100, (game) => { game.buildings.cursor.cps *= 2 }),
     }
     this.buildings = {
-      cursor: new Building("Cursor", 10, 0.1),
+      cursor: new Building("Cursor", 10, 0.1, false),
       grandma: new Building("Grandma", 25, 5),
       farm: new Building("Farm", 35, 7),
       mine: new Building("Mine", 500, 15),
@@ -87,16 +129,6 @@ class Game {
     if (this.cookies - (obj.price * q) < 0) return false
     return true
   }
-  buyUpgrade(name) {
-    if (!this.canAfford(this.upgrades[name], 1)) return 1
-    if(this.upgrades[name].owned = true) return 1
-    this.cookies -= this.upgrades[name].price
-    this.upgrades[name].run()
-    this.upgrades[name].owned = true;
-
-    this.updateCps();
-    return 0
-  }
   updateStoreRow() {
     for(const b in this.buildings) {
       const building = this.buildings[b]
@@ -117,17 +149,17 @@ class Game {
       this.updateCookies({amount:this.cpc});
     });
     for (const name in this.buildings) {
-      $(".row .building-row")
-      $(`#buy-${name}`).on("click", (e) => {
+      $(`#buy-${name.toLowerCase()}`).on("click", (e) => {
         if(!this.buildings[name]) console.error("Building does not exist")
         const building = this.buildings[name]
         building.buy(this, 1)
       });
     }
     for (const name in this.upgrades) {
-      const upgrade = this.upgrades[name]
-      $(`#buyupgrade-${upgrade.name}`).on("click", (e) => {
-        this.buyUpgrade(upgrade.name);
+      $(`#buyupgrade-${name.toLowerCase()}`).on("click", (e) => {
+        if(!this.upgrades[name]) console.error("Upgrade does not exist")
+        const upgrade = this.upgrades[name]
+        upgrade.buy(this)
       });
     }
   }

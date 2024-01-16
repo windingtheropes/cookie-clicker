@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>replit</title>
+  <title>Jack's Cookie Clicker</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
@@ -23,49 +23,10 @@
     <img id="cookie" src="img/perfectCookie.png">
 
   </section>
-  <section class="column inventory-column">
-    <div class="horizontal-divider"></div>
-    <div class="inventory-row grandmas">
-      <div class="grandma">
-        <img src="https://orteil.dashnet.org/cookieclicker/img/grandma.png">
-      </div>
-    </div>
-    <div class="horizontal-divider"></div>
-    <div class="inventory-row farms">
-      <div class="farm">
-        <img src="https://orteil.dashnet.org/cookieclicker/img/farm.png">
-      </div>
-    </div>
-    <div class="horizontal-divider"></div>
-    <div class="inventory-row mines">
-      <div class="mine">
-        <img src="https://orteil.dashnet.org/cookieclicker/img/mine.png">
-      </div>
-    </div>
-    <div class="horizontal-divider"></div>
-    <div class="inventory-row factories">
-      <div class="factory">
-        <img src="https://orteil.dashnet.org/cookieclicker/img/factory.png">
-      </div>
-    </div>
-    <div class="horizontal-divider"></div>
-    <div class="inventory-row banks">
-      <div class="bank">
-        <img src="https://orteil.dashnet.org/cookieclicker/img/bank.png">
-      </div>
-    </div>
-  </section>
+  <section class="column inventory-column" id="building-inventory"></section>
   <section class="column store-column">
-    <div class="row upgrade-row">
-      
-      <a id="buyupgrade-moreClicks" class="upgrade moreClicks" title="testing html tooltip">
-        <img class="upgrade-img">
-      </a>
-      
-    </div>
-    <div class="row building-row" id="building-store">
-     
-    </div>
+    <div class="row upgrade-row" id="upgrade-store"></div>
+    <div class="row building-row" id="building-store"></div>
   </section>
 </body>
 

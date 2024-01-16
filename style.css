@@ -1,4 +1,5 @@
 html, body {
+  font-family: Merriweather, Georgia, serif;
   height: 100%;
   width: 100%;
   padding: 0;
@@ -10,8 +11,8 @@ body {
 }
 .big-cookie {
   transition-duration:100ms;
-  height: 300px;
-  width: 300px;
+  height: 100%;
+  width: 50%;
 }
 
 .column {
@@ -26,21 +27,23 @@ body {
   width: 50%;
 }
 .inventory-row {
+  display:flex;
   height: 128px;
+  overflow:hidden;
 }
-.inventory-row.grandmas {
+.inventory-row.grandma {
   background: url(https://orteil.dashnet.org/cookieclicker/img/grandmaBackground.png)
 }
-.inventory-row.farms {
+.inventory-row.farm {
   background: url(https://orteil.dashnet.org/cookieclicker/img/farmBackground.png)
 }
-.inventory-row.mines {
+.inventory-row.mine {
   background: url(https://orteil.dashnet.org/cookieclicker/img/mineBackground.png)
 }
-.inventory-row.factories {
+.inventory-row.factory {
   background: url(https://orteil.dashnet.org/cookieclicker/img/factoryBackground.png)
 }
-.inventory-row.banks {
+.inventory-row.bank {
   background: url(https://orteil.dashnet.org/cookieclicker/img/bankBackground.png)
 }
 .store-column {
@@ -59,23 +62,31 @@ body {
 }
 
 .store-row {
+  background: url(https://orteil.dashnet.org/cookieclicker/img/storeTile.jpg);
   height: 64px;
-  background-color:grey;
   display:flex;
-  border: 1px solid white;
+  color:white;
+  text-shadow: 1px 1px 1px rgb(25,25,25);
 }
 
 .store-row .store-img {
   height:64px;
   width: 64px;
-  border:0px;
+  border: none;
 }
-
+.store-info {
+  padding-top: 8px;
+}
 .store-info .price {
   margin:0;
   padding-left:16px;
+  font-weight: 600;
   height:16px;
   background: url("img/money.png") no-repeat;
+  color:rgb(25,255,25);
+}
+.store-row.disabled .store-info .price {
+  color:red;
 }
 .store-row .store-info {
   height:16px;
@@ -113,10 +124,8 @@ body {
 .store-column .upgrade .upgrade-img {
   height:48px;
   width:48px;
-  border: 8px solid transparent;
-  border-image: url(https://orteil.dashnet.org/cookieclicker/img/panelHorizontal.png) 30 round;
 }
 
-.moreClicks .upgrade-img {
+.moreclicks .upgrade-img {
   background: url(https://cdn.dashnet.org/cookieclicker/img/icons.png?v=2.052) 0px 0px;
 }
