@@ -23,9 +23,22 @@
     <img id="cookie" src="img/perfectCookie.png">
 
   </section>
-  <section class="column inventory-column" id="building-inventory"></section>
-  <section class="column store-column">
-    <div class="row upgrade-row" id="upgrade-store"></div>
+  <div class="vertical-divider"></div>
+  <section class="column inventory-column" style="overflow: scroll" id="building-inventory">
+    <div style="background: rgba(0,0,0,0.5)"class="row title-row">
+    <h1 style="background:none; padding-top: 32px;">
+      Jack's Cookie Shop
+    </h1>
+  </div>
+    <div class="horizontal-divider"></div>
+  </section>
+  <div class="vertical-divider"></div>
+  <section class="column store-column" style="overflow:scroll;">
+    <div class="row title-row">
+      <h1>Store</h1>
+    </div>
+    <div class="horizontal-divider"></div>
+    <div class="row upgrade-row" id="upgrade-store" style="display:flex"></div>
     <div class="row building-row" id="building-store"></div>
   </section>
 </body>

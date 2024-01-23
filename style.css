@@ -5,9 +5,30 @@ html, body {
   padding: 0;
   margin: 0;
   user-select:none;
+  text-shadow: 1px 1px 1px rgb(25,25,25);
+  color:white;
 }
 body {
   display:flex;
+}
+.bakery-info {
+  width:100%;
+  text-align: center;
+}
+.title-row {
+  width:100%;
+  text-align: center;
+  margin:none;
+  padding:none;
+}
+.title-row * {
+  width:100%;
+  text-align: center;
+  background-color: rgba(0,0,0,0.5);
+}
+.bakery-info * {
+  background-color: rgba(0,0,0,0.75);
+  padding:4px;
 }
 .big-cookie {
   transition-duration:100ms;
@@ -15,9 +36,6 @@ body {
   width: 50%;
 }
 
-.column {
-  border: black 5px solid;
-}
 .cookie-column {
   width: 25%;
   max-width:25%;
@@ -31,27 +49,16 @@ body {
   height: 128px;
   overflow:hidden;
 }
-.inventory-row.grandma {
-  background: url(https://orteil.dashnet.org/cookieclicker/img/grandmaBackground.png)
-}
-.inventory-row.farm {
-  background: url(https://orteil.dashnet.org/cookieclicker/img/farmBackground.png)
-}
-.inventory-row.mine {
-  background: url(https://orteil.dashnet.org/cookieclicker/img/mineBackground.png)
-}
-.inventory-row.factory {
-  background: url(https://orteil.dashnet.org/cookieclicker/img/factoryBackground.png)
-}
-.inventory-row.bank {
-  background: url(https://orteil.dashnet.org/cookieclicker/img/bankBackground.png)
-}
 .store-column {
   width: 25%;
 }
 .horizontal-divider {
   height:16px;
   background: url(https://orteil.dashnet.org/cookieclicker/img/panelHorizontal.png);
+}
+.vertical-divider {
+  width:16px;
+  background: url(https://orteil.dashnet.org/cookieclicker/img/panelVertical.png);
 }
 .cookie-column #cookie {
   margin-top: 25vh;
@@ -66,7 +73,6 @@ body {
   height: 64px;
   display:flex;
   color:white;
-  text-shadow: 1px 1px 1px rgb(25,25,25);
 }
 
 .store-row .store-img {
@@ -91,7 +97,7 @@ body {
 .store-row .store-info {
   height:16px;
 }
-.store-row.disabled {
+.disabled {
   opacity: 50%;
 }
 .store-info h3 {
@@ -103,29 +109,28 @@ body {
   text-align:right;
 }
 
-.cursor .store-img {
-  background: url("img/buildings.png") 0px 0px;
-}
-.grandma .store-img {
-  background: url("img/buildings.png") 0px -64px;
-}
-.farm .store-img {
-  background: url("img/buildings.png") 0px -192px;
-}
-.mine .store-img {
-  background: url("img/buildings.png") 0px -256px;
-}
-.factory .store-img {
-  background: url("img/buildings.png") 0px -320px;
-}
-.bank .store-img {
-  background: url("img/buildings.png") 0px -384px;
-}
 .store-column .upgrade .upgrade-img {
   height:48px;
   width:48px;
 }
 
-.moreclicks .upgrade-img {
-  background: url(https://cdn.dashnet.org/cookieclicker/img/icons.png?v=2.052) 0px 0px;
+.column.cookie-column {
+  background: url("img/cookieShower1.png");
+  animation: cookieShower 5s infinite linear;
 }
+@keyframes cookieShower {
+  0% {
+    background-position: 0xp 0px;
+  }
+  100% {
+    background-position: 0px 512px;
+  }
+}
+
+.store-column .row.title-row {
+  height: 48px;
+}
+.inventory-column .row.title-row {
+  height: 96px;
+}
+
